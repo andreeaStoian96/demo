@@ -1,7 +1,6 @@
-import sun.util.calendar.BaseCalendar;
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -11,6 +10,7 @@ public class Application extends BasicEmployeeSettingsImp {
     private static FiltersImp filtersImp = new FiltersImp();
 
     public static void main(String[] args) throws ParseException {
+
         addInitialEmployees();
         Scanner input = new Scanner(System.in);
         do {
@@ -88,8 +88,9 @@ public class Application extends BasicEmployeeSettingsImp {
                             oldEmp.setSalary(input.nextDouble());
                             break;
                         case 9:
-                            System.out.println("Enter employee resign date using the following pattern: dd/mm/yyyy");
-                            oldEmp.setEmployeeResignDate(new SimpleDateFormat("dd/MM/yyyy").parse(input.next()));
+                            System.out.println("Enter employee resign date using the following pattern: yyyy-mm-dd");
+                            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+                            oldEmp.setEmployeeResignDate(LocalDate.parse(input.next()));
                             break;
                         default:
                             System.out.println("Enter a correct choice from the list!");
@@ -115,8 +116,19 @@ public class Application extends BasicEmployeeSettingsImp {
                                 employeesTwo.forEach(employee -> System.out.println(employee));
                                 break;
                             case 3:
-                                System.out.println("Enter month and year!");
+                                System.out.println("Enter month as integer(0-january.....11-december)!");
+                                int month = input.nextInt();
+                                System.out.println("Enter year as integer!");
+                                int year = input.nextInt();
+                                List<Employee> employeesThree = filtersImp.getEmployeesWhoResignByMonthAndYear(employeeList, month, year);
 
+                                employeesThree.forEach(employee -> System.out.println(employee));
+                                break;
+                            case 4:
+                                System.out.println("Enter how many months!");
+                                int months = input.nextInt();
+                               List<Employee> filteredEmployees =  filtersImp.getListOfEmployeesInTheLastXMonths(employeeList, months);
+                                filteredEmployees.forEach(employee -> System.out.println(employee));
                         }
                     } while (input.nextInt() != 5);
                 case 6:
@@ -138,8 +150,9 @@ public class Application extends BasicEmployeeSettingsImp {
         employee.setAge(input.nextInt());
         System.out.println("Enter employee email:");
         employee.setEmail(input.next());
-        System.out.println("Enter employment date of employee using the following pattern: dd/MM/yyyy");
-        employee.setEmploymentDate(new SimpleDateFormat("dd/MM/yyyy").parse(input.next()));
+        System.out.println("Enter employment date of employee using the following pattern: yyyy-mm-dd");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+        employee.setEmploymentDate(LocalDate.parse(input.next()));
         System.out.println("Enter employee function:");
         employee.setFunction(input.next());
         System.out.println("Is the employee manager? y/n");
@@ -153,28 +166,27 @@ public class Application extends BasicEmployeeSettingsImp {
     }
 
     private static void addInitialEmployees() {
-        Employee emp1 = new Employee(1, "Maria", "Ion", 29, "mariaion@yahoo.com",
-                new Date("11/12/2019"), null, "developer", true, "Ion", 5999.0);
+        Employee emp1 = new Employee(1, "Maria", "Ion", 29, "mariaion@yahoo.com",  LocalDate.of(2009, 12, 11), null, "developer", true, "Ion", 5999.0);
         Employee emp2 = new Employee(2, "Mioara", "Ian", 39, "mioaraian@gmail.com",
-                new Date("01/02/2009"), null, "HR", false, "Andreea", 2599.0);
+                LocalDate.parse("2009-12-23"), LocalDate.parse("2010-02-12"), "HR", false, "Andreea", 2599.0);
         Employee emp3 = new Employee(3, "Alex", "Maghe", 40, "alexmaghe@gmail.com",
-                new Date("21/03/2010"), null, "developer", false, "Ion", 3999.0);
+                LocalDate.parse("2010-11-13"), null, "developer", false, "Ion", 3999.0);
         Employee emp4 = new Employee(4, "Alina", "Vagner", 30, "alinavagner@yahoo.com",
-                new Date("22/12/2017"), null, "developer", false, "Ion", 2299.0);
+                LocalDate.parse("2017-12-12"), null, "developer", false, "Ion", 2299.0);
         Employee emp5 = new Employee(5, "Marian", "Stenea", 59, "marianstenea@yahoo.com",
-                new Date("11/12/2010"), null, "developer", true, "Stenea", 5999.0);
+                LocalDate.parse("2010-12-11"), null, "developer", true, "Stenea", 5999.0);
         Employee emp6 = new Employee(6, "Ionut", "Alunu", 29, "ionutalunu@yahoo.com",
-                new Date("10/05/2020"), null, "developer", false, "Stenea", 3999.0);
+                LocalDate.parse("2020-10-15"), null, "developer", false, "Stenea", 3999.0);
         Employee emp7 = new Employee(7, "Alin", "Aba", 49, "alinaba@yahoo.com",
-                new Date("16/10/2016"), null, "developer", false, "Stenea", 3999.0);
+                LocalDate.parse("2016-10-16"), null, "developer", false, "Stenea", 3999.0);
         Employee emp8 = new Employee(8, "Adina", "Simo", 25, "adinasimo@yahoo.com",
-                new Date("11/12/2020"), null, "developer", false, "Ion", 2000.0);
+                LocalDate.parse("2020-11-24"), null, "developer", false, "Ion", 2000.0);
         Employee emp9 = new Employee(9, "Andrei", "Mihai", 43, "andreimihai@yahoo.com",
-                new Date("29/12/2020"), null, "developer", false, "Ion", 2533.0);
+                LocalDate.parse("2020-12-29"), null, "developer", false, "Ion", 2533.0);
         Employee emp10 = new Employee(10, "Diana", "Posa", 34, "dianaposa@yahoo.com",
-                new Date("02/02/2018"), null, "developer", false, "Ion", 3525.0);
+                LocalDate.parse("2022-09-02"), null, "developer", false, "Ion", 3525.0);
         Employee emp11 = new Employee(11, "Vlad", "Vasile", 32, "vladvasile@yahoo.com",
-                new Date("23/06/2016"), null, "developer", false, "Stenea", 3423.0);
+                LocalDate.parse("2016-06-03"), null, "developer", false, "Stenea", 3423.0);
         employeeList.addAll(Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9, emp10, emp11));
     }
 

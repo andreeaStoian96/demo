@@ -1,15 +1,16 @@
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Employee {
+
     private static final AtomicInteger count = new AtomicInteger(0);
     private int id = count.incrementAndGet();
     private String firstName;
     private String lastName;
     private int age;
     private String email;
-    private Date employmentDate;
-    private Date employeeResignDate;
+    private LocalDate employmentDate;
+    private LocalDate employeeResignDate;
     private String function;
     private boolean isManager;
     private String managerName;
@@ -17,7 +18,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int id, String firstName, String lastName, int age, String email, Date employmentDate, Date employeeResignDate, String function,
+    public Employee(int id, String firstName, String lastName, int age, String email, LocalDate employmentDate, LocalDate employeeResignDate, String function,
                     boolean isManager, String managerName, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -67,19 +68,19 @@ public class Employee {
         this.email = email;
     }
 
-    public Date getEmploymentDate() {
+    public LocalDate getEmploymentDate() {
         return employmentDate;
     }
 
-    public void setEmploymentDate(Date employmentDate) {
+    public void setEmploymentDate(LocalDate employmentDate) {
         this.employmentDate = employmentDate;
     }
 
-    public Date getEmployeeResignDate() {
+    public LocalDate getEmployeeResignDate() {
         return employeeResignDate;
     }
 
-    public void setEmployeeResignDate(Date employeeResignDate) {
+    public void setEmployeeResignDate(LocalDate employeeResignDate) {
         this.employeeResignDate = employeeResignDate;
     }
 
