@@ -103,8 +103,10 @@ public class Application extends BasicEmployeeSettingsImp {
                         System.out.println("Choose from the filter:\n"
                                 + "1.First 10 employees in terms of seniority in the company\n"
                                 + "2.First 5 employees with the biggest salary\n"
-                                + "3.the employees that have resign in certain year and month\n"
-                                + "4.List of employees in the last (enter the numbers of months)");
+                                + "3.The employees that have resign in certain year and month\n"
+                                + "4.List of employees in the last (enter the numbers of months)\n"
+                                + "5.Employee with the maximum salary\n"
+                                + "6.Employee with the minimum salary\n");
                         int filter = input.nextInt();
                         switch (filter) {
                             case 1:
@@ -127,8 +129,14 @@ public class Application extends BasicEmployeeSettingsImp {
                             case 4:
                                 System.out.println("Enter how many months!");
                                 int months = input.nextInt();
-                               List<Employee> filteredEmployees =  filtersImp.getListOfEmployeesInTheLastXMonths(employeeList, months);
+                                List<Employee> filteredEmployees = filtersImp.getListOfEmployeesInTheLastXMonths(employeeList, months);
                                 filteredEmployees.forEach(employee -> System.out.println(employee));
+                            case 5:
+                                Optional<Employee> filterFive = filtersImp.getEmployeeWithMaximumSalary(employeeList);
+                                System.out.println(filterFive);
+                            case 6:
+                                Optional<Employee> filterSix = filtersImp.getEmployeeWithMinimumSalary(employeeList);
+                                System.out.println(filterSix);
                         }
                     } while (input.nextInt() != 5);
                 case 6:
@@ -166,7 +174,7 @@ public class Application extends BasicEmployeeSettingsImp {
     }
 
     private static void addInitialEmployees() {
-        Employee emp1 = new Employee(1, "Maria", "Ion", 29, "mariaion@yahoo.com",  LocalDate.of(2009, 12, 11), null, "developer", true, "Ion", 5999.0);
+        Employee emp1 = new Employee(1, "Maria", "Ion", 29, "mariaion@yahoo.com", LocalDate.of(2009, 12, 11), null, "developer", true, "Ion", 5999.0);
         Employee emp2 = new Employee(2, "Mioara", "Ian", 39, "mioaraian@gmail.com",
                 LocalDate.parse("2009-12-23"), LocalDate.parse("2010-02-12"), "HR", false, "Andreea", 2599.0);
         Employee emp3 = new Employee(3, "Alex", "Maghe", 40, "alexmaghe@gmail.com",

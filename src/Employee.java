@@ -15,6 +15,7 @@ public class Employee {
     private boolean isManager;
     private String managerName;
     private double salary;
+
     public Employee() {
     }
 
@@ -51,6 +52,7 @@ public class Employee {
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -58,12 +60,15 @@ public class Employee {
     public int getAge() {
         return age;
     }
+
     public void setAge(int age) {
         this.age = age;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }

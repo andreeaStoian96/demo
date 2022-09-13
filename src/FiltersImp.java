@@ -1,16 +1,14 @@
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class FiltersImp implements Filters {
     @Override
     public List<Employee> getFirstTenEmployeesWithSeniority(List<Employee> employeeList) {
-        List<Employee> tenEmployeeWithSeniority = employeeList.stream()
+        return employeeList.stream()
                 .limit(10)
                 .sorted((e1, e2) -> e1.getEmploymentDate().compareTo(e2.getEmploymentDate()))
                 .collect(Collectors.toList());
-        return tenEmployeeWithSeniority;
     }
 
     @Override
@@ -44,12 +42,15 @@ public class FiltersImp implements Filters {
     }
 
     @Override
-    public void getEmployeeWithMaximumSalary() {
+    public Optional<Employee> getEmployeeWithMaximumSalary(List<Employee> employeeList) {
+        return employeeList.stream()
+                .max(Comparator.comparing(Employee::getSalary));
 
     }
 
     @Override
-    public void getEmployeeWithMinimumSalary() {
-
+    public Optional<Employee> getEmployeeWithMinimumSalary(List<Employee> employeeList) {
+        return employeeList.stream()
+                .min(Comparator.comparing(Employee::getSalary));
     }
 }
