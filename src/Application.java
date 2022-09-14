@@ -14,13 +14,7 @@ public class Application extends BasicEmployeeSettingsImp {
         addInitialEmployees();
         Scanner input = new Scanner(System.in);
         do {
-            System.out.println("Press: \n"
-                    + "1 for add employee"
-                    + "\n2 for view employee "
-                    + "\n3 for delete employee "
-                    + "\n4 for alter employee"
-                    + "\n5 for filters"
-                    + "\n6 for exiting the program ");
+            showMainOperationMessage();
             int inp = input.nextInt();
             switch (inp) {
                 case 1:
@@ -41,18 +35,7 @@ public class Application extends BasicEmployeeSettingsImp {
                     verEmail = input.next();
                     Employee oldEmp = getEmployeeByEmail(employeeList, verEmail);
                     Employee newEmployee = oldEmp;
-                    System.out.println("Modify employee details:\n"
-                            + "1.First name\n"
-                            + "2.Last name\n"
-                            + "3.Age\n"
-                            + "4.Email\n"
-                            + "5.Function\n"
-                            + "6.Is employee manager?\n"
-                            + "7.Manager name\n"
-                            + "8.Salary\n"
-                            + "9.resign date");
-
-                    System.out.println("Enter your choice:");
+                    showAlterEmployeeMessage();
                     int change = input.nextInt();
                     switch (change) {
                         case 1:
@@ -100,45 +83,39 @@ public class Application extends BasicEmployeeSettingsImp {
                     break;
                 case 5:
                     do {
-                        System.out.println("Choose from the filter:\n"
-                                + "1.First 10 employees in terms of seniority in the company\n"
-                                + "2.First 5 employees with the biggest salary\n"
-                                + "3.The employees that have resign in certain year and month\n"
-                                + "4.List of employees in the last (enter the numbers of months)\n"
-                                + "5.Employee with the maximum salary\n"
-                                + "6.Employee with the minimum salary\n");
+                        showFiltersMessage();
                         int filter = input.nextInt();
                         switch (filter) {
-                            case 1:
-                                List<Employee> employees = filtersImp.getFirstTenEmployeesWithSeniority(employeeList);
-                                employees.forEach(employee -> System.out.println(employee));
-                                break;
-                            case 2:
-                                List<Employee> employeesTwo = filtersImp.getFirstFiveEmployeeWithTheBestSalary(employeeList);
-                                employeesTwo.forEach(employee -> System.out.println(employee));
-                                break;
-                            case 3:
-                                System.out.println("Enter month as integer(0-january.....11-december)!");
-                                int month = input.nextInt();
-                                System.out.println("Enter year as integer!");
-                                int year = input.nextInt();
-                                List<Employee> employeesThree = filtersImp.getEmployeesWhoResignByMonthAndYear(employeeList, month, year);
+                    case 1:
+                        List<Employee> employees = filtersImp.getFirstTenEmployeesWithSeniority(employeeList);
+                        employees.forEach(employee -> System.out.println(employee));
+                        break;
+                    case 2:
+                        List<Employee> employeesTwo = filtersImp.getFirstFiveEmployeeWithTheBestSalary(employeeList);
+                        employeesTwo.forEach(employee -> System.out.println(employee));
+                        break;
+                    case 3:
+                        System.out.println("Enter month as integer(0-january.....11-december)!");
+                        int month = input.nextInt();
+                        System.out.println("Enter year as integer!");
+                        int year = input.nextInt();
+                        List<Employee> employeesThree = filtersImp.getEmployeesWhoResignByMonthAndYear(employeeList, month, year);
 
-                                employeesThree.forEach(employee -> System.out.println(employee));
-                                break;
-                            case 4:
-                                System.out.println("Enter how many months!");
-                                int months = input.nextInt();
-                                List<Employee> filteredEmployees = filtersImp.getListOfEmployeesInTheLastXMonths(employeeList, months);
-                                filteredEmployees.forEach(employee -> System.out.println(employee));
-                            case 5:
-                                Optional<Employee> filterFive = filtersImp.getEmployeeWithMaximumSalary(employeeList);
-                                System.out.println(filterFive);
-                            case 6:
-                                Optional<Employee> filterSix = filtersImp.getEmployeeWithMinimumSalary(employeeList);
-                                System.out.println(filterSix);
-                        }
-                    } while (input.nextInt() != 5);
+                        employeesThree.forEach(employee -> System.out.println(employee));
+                        break;
+                    case 4:
+                        System.out.println("Enter how many months!");
+                        int months = input.nextInt();
+                        List<Employee> filteredEmployees = filtersImp.getListOfEmployeesInTheLastXMonths(employeeList, months);
+                        filteredEmployees.forEach(employee -> System.out.println(employee));
+                    case 5:
+                        Optional<Employee> filterFive = filtersImp.getEmployeeWithMaximumSalary(employeeList);
+                        System.out.println(filterFive);
+                    case 6:
+                        Optional<Employee> filterSix = filtersImp.getEmployeeWithMinimumSalary(employeeList);
+                        System.out.println(filterSix);
+                }
+            } while (input.nextInt() != 5);
                 case 6:
                     System.out.println("You have choose to exit!");
                     break;
@@ -146,6 +123,43 @@ public class Application extends BasicEmployeeSettingsImp {
         } while (input.nextInt() != 6);
     }
 
+    private static void showFiltersMessage() {
+        System.out.println("Choose from the filter:\n"
+                + "1.First 10 employees in terms of seniority in the company\n"
+                + "2.First 5 employees with the biggest salary\n"
+                + "3.The employees that have resign in certain year and month\n"
+                + "4.List of employees in the last (enter the numbers of months)\n"
+                + "5.Employee with the maximum salary\n"
+                + "6.Employee with the minimum salary\n");
+    }
+
+    private static void showAlterEmployeeMessage() {
+        System.out.println("Modify employee details:\n"
+                + "1.First name\n"
+                + "2.Last name\n"
+                + "3.Age\n"
+                + "4.Email\n"
+                + "5.Function\n"
+                + "6.Is employee manager?\n"
+                + "7.Manager name\n"
+                + "8.Salary\n"
+                + "9.resign date");
+
+        System.out.println("Enter your choice:");
+    }
+
+    private static void showMainOperationMessage() {
+        System.out.println("Press: \n"
+                + "1 for add employee"
+                + "\n2 for view employee "
+                + "\n3 for delete employee "
+                + "\n4 for alter employee"
+                + "\n5 for filters"
+                + "\n6 for exiting the program ");
+    }
+private static Employee alterEmployee(){
+
+}
     private static Employee createEmployee() throws ParseException {
         Employee employee = new Employee();
         Scanner input = new Scanner(System.in);
