@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Application extends BasicEmployeeSettingsImp {
@@ -67,7 +68,7 @@ public class Application extends BasicEmployeeSettingsImp {
     private static void showMainOperationMessage() {
         System.out.println("Press: \n"
                 + "1 for add employee\n"
-                + "2 for view employee\n "
+                + "2 for view employee\n"
                 + "3 for delete employee\n"
                 + "4 for alter employee\n"
                 + "5 for filters\n"
@@ -83,8 +84,16 @@ public class Application extends BasicEmployeeSettingsImp {
         employee.setLastName(input.next());
         System.out.println("Enter employee age: ");
         employee.setAge(input.nextInt());
-        System.out.println("Enter employee email:");
-        employee.setEmail(input.next());
+        String email;
+        do {
+            System.out.println("Enter employee email:");
+            email = input.next();
+            if (isEmailInTheList(email)) {
+                System.out.println("This email already exists!");
+                employee.setEmail(input.next());
+            }
+        } while (isEmailInTheList(email));
+
         System.out.println("Enter employment date of employee using the following pattern: yyyy-mm-dd");
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         employee.setEmploymentDate(LocalDate.parse(input.next()));
@@ -92,13 +101,24 @@ public class Application extends BasicEmployeeSettingsImp {
         employee.setFunction(input.next());
         System.out.println("Is the employee manager? y/n");
         employee.setManager(input.next().equalsIgnoreCase("y"));
-        System.out.println(employee.isManager());
-        System.out.println("Enter manager name:");
-        employee.setManagerName(input.next());
+        if (employee.isManager()) {
+            System.out.println("This employee is a manager!");
+        } else {
+            System.out.println("Enter manager name:");
+            employee.setManagerName(input.next());
+        }
         System.out.println("Enter employee salary:");
         employee.setSalary(input.nextDouble());
         return employee;
     }
+
+    private static boolean isEmailInTheList(String email) {
+       return employeeList.stream()
+                    .anyMatch(empl -> empl.getEmail().equalsIgnoreCase(email));
+
+    }
+
+
     private static Employee alterEmployee() {
         System.out.println("Enter the employee email you want to modify:");
         Scanner input = new Scanner(System.in);
@@ -120,8 +140,16 @@ public class Application extends BasicEmployeeSettingsImp {
                 oldEmp.setAge(input.nextInt());
                 break;
             case 4:
-                System.out.println("Enter the new email address for the employee:");
-                oldEmp.setEmail(input.next());
+                String email;
+                do {
+                    System.out.println("Enter the new email address for the employee:");
+                    email = input.next();
+                    if (isEmailInTheList(email)) {
+                        System.out.println("This email already exists!");
+                        oldEmp.setEmail(input.next());
+                    }
+                } while (isEmailInTheList(email));
+
                 break;
             case 5:
                 System.out.println("Enter the new function of the employee:");
