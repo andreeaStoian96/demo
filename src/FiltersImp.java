@@ -25,12 +25,9 @@ public class FiltersImp implements Filters {
         List<Employee> employeesWithResignDate = employeeList.stream()
                 .filter(employee -> employee.getEmployeeResignDate() != null)
                 .collect(Collectors.toList());
-        employeesWithResignDate.stream().filter(employee -> employee.getEmployeeResignDate().getMonth().equals(month))
+        return employeesWithResignDate.stream().filter(employee ->
+                        (employee.getEmployeeResignDate().getYear() == year && employee.getEmployeeResignDate().getMonthValue() == month))
                 .collect(Collectors.toList());
-        employeesWithResignDate.stream().filter(employee -> employee.getEmployeeResignDate().getYear() == year)
-                .collect(Collectors.toList());
-        return employeesWithResignDate;
-
     }
 
     @Override
