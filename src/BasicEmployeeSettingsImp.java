@@ -29,8 +29,6 @@ public class BasicEmployeeSettingsImp implements BasicEmployeeSettings {
         for (Employee oldEmp : employeeList) {
             if (oldEmp.getId() == (newEmployee.getId())) {
                 oldEmp = newEmployee;
-                int index = employeeList.indexOf(oldEmp);
-                employeeList.set(index, newEmployee);
                 break;
             }
         }
