@@ -90,7 +90,7 @@ public class Application extends BasicEmployeeSettingsImp {
             email = input.next();
             if (isEmailInTheList(email)) {
                 System.out.println("This email already exists!");
-                employee.setEmail(input.next());
+                employee.setEmail(input.nextLine());
             }
         } while (isEmailInTheList(email));
 
@@ -146,7 +146,7 @@ public class Application extends BasicEmployeeSettingsImp {
                     email = input.next();
                     if (isEmailInTheList(email)) {
                         System.out.println("This email already exists!");
-                        oldEmp.setEmail(input.next());
+                        oldEmp.setEmail(input.nextLine());
                     }
                 } while (isEmailInTheList(email));
 
