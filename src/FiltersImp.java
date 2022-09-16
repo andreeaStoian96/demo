@@ -50,4 +50,16 @@ public class FiltersImp implements Filters {
         return employeeList.stream()
                 .min(Comparator.comparing(Employee::getSalary));
     }
+
+    @Override
+    public Set<String> getManagers(List<Employee> employeeList) {
+         return employeeList.stream()
+                 .map(value -> value.getManagerName())
+                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<Employee> getManagersAndEmployees(List<Employee> employeeList) {
+        return null;
+    }
 }

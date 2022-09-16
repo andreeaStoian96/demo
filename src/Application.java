@@ -1,7 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class Application extends BasicEmployeeSettingsImp {
@@ -12,7 +11,8 @@ public class Application extends BasicEmployeeSettingsImp {
     public static void main(String[] args) {
         addInitialEmployees();
         Scanner input = new Scanner(System.in);
-        do {showMainOperationMessage();
+        do {
+            showMainOperationMessage();
             int inp = input.nextInt();
             switch (inp) {
                 case 1:
@@ -28,7 +28,8 @@ public class Application extends BasicEmployeeSettingsImp {
                     verEmail = input.next();
                     basicEmployeeSettingsImp.deleteEmployee(employeeList, verEmail);
                     break;
-                case 4: alterEmployee();
+                case 4:
+                    alterEmployee();
                     break;
                 case 5:
                     filters();
@@ -50,8 +51,11 @@ public class Application extends BasicEmployeeSettingsImp {
                 + "4.List of employees in the last (enter the numbers of months)\n"
                 + "5.Employee with the maximum salary\n"
                 + "6.Employee with the minimum salary\n"
+                + "7.Show managers\n"
+                + "8.Show managers with they're employee\n"
                 + "7.Enter 7 for main menu!");
     }
+
     private static void showAlterEmployeeMessage() {
         System.out.println("Modify employee details:\n"
                 + "1.First name\n"
@@ -65,6 +69,7 @@ public class Application extends BasicEmployeeSettingsImp {
                 + "9.resign date");
         System.out.println("Enter your choice:");
     }
+
     private static void showMainOperationMessage() {
         System.out.println("Press: \n"
                 + "1 for add employee\n"
@@ -74,6 +79,7 @@ public class Application extends BasicEmployeeSettingsImp {
                 + "5 for filters\n"
                 + "6 for exiting the program");
     }
+
     private static Employee createEmployee() {
         Employee employee = new Employee();
         Scanner input = new Scanner(System.in);
@@ -113,12 +119,9 @@ public class Application extends BasicEmployeeSettingsImp {
     }
 
     private static boolean isEmailInTheList(String email) {
-       return employeeList.stream()
-                    .anyMatch(empl -> empl.getEmail().equalsIgnoreCase(email));
-
+        return employeeList.stream()
+                .anyMatch(empl -> empl.getEmail().equalsIgnoreCase(email));
     }
-
-
     private static Employee alterEmployee() {
         System.out.println("Enter the employee email you want to modify:");
         Scanner input = new Scanner(System.in);
@@ -179,9 +182,11 @@ public class Application extends BasicEmployeeSettingsImp {
         basicEmployeeSettingsImp.alterEmployee(employeeList, oldEmp);
         return oldEmp;
     }
+
     private static void filters() {
         Scanner input = new Scanner(System.in);
-        do {showFiltersMessage();
+        do {
+            showFiltersMessage();
             int filter = input.nextInt();
             switch (filter) {
                 case 1:
@@ -214,12 +219,18 @@ public class Application extends BasicEmployeeSettingsImp {
                     Optional<Employee> filterSix = filtersImp.getEmployeeWithMinimumSalary(employeeList);
                     System.out.println(filterSix);
                     break;
+                case 7:
+                    Set<String> getManagers = filtersImp.getManagers(employeeList);
+                    System.out.println("The managers are: ");
+                    getManagers.forEach(System.out::println);
+                    break;
                 default:
                     System.out.println("Enter a valid choice from the list!");
                     break;
             }
         } while (input.nextInt() != 7);
     }
+
     private static void addInitialEmployees() {
         Employee emp1 = new Employee(1, "Maria", "Ion", 29, "mariaion@yahoo.com", LocalDate.of(2009, 12, 11), null, "developer", true, "Ion", 5999.0);
         Employee emp2 = new Employee(2, "Mioara", "Ian", 39, "mioaraian@gmail.com",
