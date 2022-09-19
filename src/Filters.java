@@ -18,4 +18,6 @@ public interface Filters {
 
     void getManagersAndEmployees(List<Employee> employeeList);
 
+    void getFunctionAndEmployees(List<Employee> employeeList);
+
 }

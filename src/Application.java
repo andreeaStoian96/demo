@@ -2,7 +2,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
 public class Application extends BasicEmployeeSettingsImp {
     private static List<Employee> employeeList = new ArrayList<>();
     private static BasicEmployeeSettingsImp basicEmployeeSettingsImp = new BasicEmployeeSettingsImp();
@@ -53,7 +52,8 @@ public class Application extends BasicEmployeeSettingsImp {
                 + "6.Employee with the minimum salary\n"
                 + "7.Show managers\n"
                 + "8.Show managers with they're employee\n"
-                + "7.Enter 7 for main menu!");
+                + "9.Show function and employee "
+                + "10.Enter 10 for main menu!");
     }
 
     private static void showAlterEmployeeMessage() {
@@ -152,7 +152,6 @@ public class Application extends BasicEmployeeSettingsImp {
                         oldEmp.setEmail(input.nextLine());
                     }
                 } while (isEmailInTheList(email));
-
                 break;
             case 5:
                 System.out.println("Enter the new function of the employee:");
@@ -227,11 +226,14 @@ public class Application extends BasicEmployeeSettingsImp {
                 case 8:
                     filtersImp.getManagersAndEmployees(employeeList);
                     break;
+                case 9:
+                    filtersImp.getFunctionAndEmployees(employeeList);
+                    break;
                 default:
                     System.out.println("Enter a valid choice from the list!");
                     break;
             }
-        } while (input.nextInt() != 7);
+        } while (input.nextInt() != 10);
     }
 
     private static void addInitialEmployees() {

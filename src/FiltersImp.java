@@ -7,17 +7,15 @@ public class FiltersImp implements Filters {
     public List<Employee> getFirstTenEmployeesWithSeniority(List<Employee> employeeList) {
         return employeeList.stream()
                 .limit(10)
-                .sorted((e1, e2) -> e1.getEmploymentDate().compareTo(e2.getEmploymentDate()))
+                .sorted(Comparator.comparing(Employee::getEmploymentDate))
                 .collect(Collectors.toList());
     }
-
     @Override
     public List<Employee> getFirstFiveEmployeeWithTheBestSalary(List<Employee> employeeList) {
-        List<Employee> fiveEmployeesWithBestSalary = employeeList.stream()
+        return employeeList.stream()
                 .limit(5)
                 .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
                 .collect(Collectors.toList());
-        return fiveEmployeesWithBestSalary;
     }
 
     @Override
@@ -35,14 +33,12 @@ public class FiltersImp implements Filters {
         return employeeList.stream()
                 .filter(employee -> employee.getEmploymentDate().isAfter(LocalDate.now().minusMonths(months)))
                 .collect(Collectors.toList());
-
     }
 
     @Override
     public Optional<Employee> getEmployeeWithMaximumSalary(List<Employee> employeeList) {
         return employeeList.stream()
                 .max(Comparator.comparing(Employee::getSalary));
-
     }
 
     @Override
@@ -54,14 +50,13 @@ public class FiltersImp implements Filters {
     @Override
     public List<Employee> getManagers(List<Employee> employeeList) {
         return employeeList.stream()
-                .filter(employee -> employee.isManager())
+                .filter(Employee::isManager)
                 .collect(Collectors.toList());
 //        return  employeeList.stream()
 //                .map(Employee::getManagerName)
 //                .distinct()
 //                .collect(Collectors.toList());
     }
-
     @Override
     public void getManagersAndEmployees(List<Employee> employeeList) {
         Map<String, List<Employee>> employeeListByManagers = employeeList.stream()
@@ -76,6 +71,20 @@ public class FiltersImp implements Filters {
             }
             System.out.println();
         }
+    }
 
+    @Override
+    public void getFunctionAndEmployees(List<Employee> employeeList) {
+        Map<String, List<Employee>> employeeListByFunction = employeeList.stream()
+                .collect(Collectors.groupingBy(Employee::getFunction));
+        Set<Map.Entry<String, List<Employee>>> entrySet = employeeListByFunction.entrySet();
+        for(Map.Entry<String, List<Employee>> entry : entrySet){
+            System.out.println("Function is: \n" + entry.getKey() + "\n "+ "Employee name: ");
+            List<Employee> list = entry.getValue();
+            for(Employee emp : list){
+                System.out.println(emp.getFirstName() + " " + emp.getFirstName());
+            }
+            System.out.println();
+        }
     }
 }

@@ -2,7 +2,6 @@ import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Employee {
-
     private static final AtomicInteger count = new AtomicInteger(0);
     private int id = count.incrementAndGet();
     private String firstName;
@@ -32,7 +31,6 @@ public class Employee {
         this.managerName = managerName;
         this.salary = salary;
     }
-
     public int getId() {
         return id;
     }
@@ -137,6 +135,4 @@ public class Employee {
                 ", Salary: " + salary +
                 '}';
     }
-
-
 }
